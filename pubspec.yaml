@@ -4,8 +4,8 @@ version: 2.0.2
 homepage: https://github.com/eyoeldefare/textfield_tags
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=2.0.0"
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
