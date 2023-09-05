@@ -23,13 +23,13 @@ abstract class TextfieldTagsNotifier extends ChangeNotifier {
 
   final scrollController = ScrollController();
 
-  late TextEditingController? textEditingController;
-  late FocusNode? focusNode;
+  TextEditingController? textEditingController;
+  FocusNode? focusNode;
 
-  late Set<String>? _textSeparators;
-  late List<String>? _tags;
+  Set<String> _textSeparators = Set();
+  List<String> _tags = [];
 
-  List<String>? get getTags => _tags?.toList();
+  List<String> get getTags => _tags.toList();
 
   void initS(
     List<String>? initialTags,
@@ -44,11 +44,11 @@ abstract class TextfieldTagsNotifier extends ChangeNotifier {
   }
 
   set addTag(String tag) {
-    _tags!.add(tag);
+    _tags.add(tag);
   }
 
   set removeTag(String tag) {
-    _tags!.remove(tag);
+    _tags.remove(tag);
   }
 
   onChanged(String value);
@@ -77,7 +77,7 @@ class TextfieldTagsController extends TextfieldTagsNotifier {
   }
 
   bool get hasError => _error != null && _error!.isNotEmpty;
-  bool get hasTags => _tags != null && _tags!.isNotEmpty;
+  bool get hasTags => _tags.isNotEmpty;
   String? get getError => _error;
 
   void scrollTags({
@@ -128,9 +128,7 @@ class TextfieldTagsController extends TextfieldTagsNotifier {
   void onChanged(String value) {
     final ts = _textSeparators!;
     final lc = _letterCase!;
-    final separator = ts.cast<String?>().firstWhere(
-        (element) => value.contains(element!) && value.indexOf(element) != 0,
-        orElse: () => null);
+    final separator = ts.cast<String?>().firstWhere((element) => value.contains(element!) && value.indexOf(element) != 0, orElse: () => null);
     if (separator != null) {
       final splits = value.split(separator);
       final indexer = splits.length > 1 ? splits.length - 2 : splits.length - 1;
@@ -172,7 +170,7 @@ class TextfieldTagsController extends TextfieldTagsNotifier {
 
   void clearTags() {
     _error = null;
-    _tags!.clear();
+    _tags.clear();
     notifyListeners();
   }
 
